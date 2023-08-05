@@ -147,13 +147,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\glfw.cpp" />
     <ClCompile Include="src\glad.c" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\window.cpp" />
+    <ClCompile Include="src\VBO.cpp" />
+    <ClCompile Include="src\VAO.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\glfw.h" />
     <ClInclude Include="src\main.h" />
     <ClInclude Include="src\window.h" />
+    <ClInclude Include="src\VBO.h" />
+    <ClInclude Include="src\VAO.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
