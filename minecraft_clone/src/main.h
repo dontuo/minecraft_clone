@@ -3,5 +3,5 @@
 
 struct GlobalState
 {
-	Window *window;
+	Window window;
 };
