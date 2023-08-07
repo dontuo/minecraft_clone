@@ -150,16 +150,20 @@
     <ClCompile Include="src\glfw.cpp" />
     <ClCompile Include="src\glad.c" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\stb_image.cpp" />
     <ClCompile Include="src\window.cpp" />
     <ClCompile Include="src\VBO.cpp" />
     <ClCompile Include="src\VAO.cpp" />
+    <ClCompile Include="src\texture.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\glfw.h" />
     <ClInclude Include="src\main.h" />
+    <ClInclude Include="src\stb_image.h" />
     <ClInclude Include="src\window.h" />
     <ClInclude Include="src\VBO.h" />
     <ClInclude Include="src\VAO.h" />
+    <ClInclude Include="src\texture.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
