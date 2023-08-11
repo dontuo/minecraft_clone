@@ -8,5 +8,5 @@ void main()
 {
     //texture2 =1;
 
-    FragColor = mix(texture(texture1, texCord), texture(texture2, texCord), 0.5f); //vec4(.2f, 0.8f, 0.2f, 1.0f);
-}
+    FragColor = texture(texture1, texCord); //vec4(.2f, 0.8f, 0.2f, 1.0f);
+} 

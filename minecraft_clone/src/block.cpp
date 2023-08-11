@@ -12,7 +12,6 @@
 #include "VBO.h"
 #include "EBO.h"
 
-
 void Block::push_Data()
 {
     m_data_vertices.push_data(sizeof(cube_vertices), cube_vertices, GL_STATIC_DRAW);
@@ -37,35 +36,26 @@ Block::Block()
 void Block::draw()
 {
     int offset = 0;
-
-    if (!(m_id == 0)) {
-        for (auto side : isdrawable)
+    for (auto side : isdrawable)
+    {
+        
+        if (side)
         {
+            m_vao.bind();
+            m_vao.bind();
+            m_ebo.bind();
+            
+            glDrawArrays(GL_TRIANGLES, offset, 6);
+            /*glDrawArrays(GL_TRIANGLES, 6, 6);
+            glDrawArrays(GL_TRIANGLES, 12, 6);
+            glDrawArrays(GL_TRIANGLES, 18, 6);
+            glDrawArrays(GL_TRIANGLES, 24, 6);
+            glDrawArrays(GL_TRIANGLES, 30, 6);*/
 
-            if (side)
-            {
-                m_vao.bind();
-                m_vao.bind();
-                //m_ebo.bind();
-
-                glDrawArrays(GL_TRIANGLES, offset, 6);
-                /*glDrawArrays(GL_TRIANGLES, 6, 6);
-                glDrawArrays(GL_TRIANGLES, 12, 6);
-                glDrawArrays(GL_TRIANGLES, 18, 6);
-                glDrawArrays(GL_TRIANGLES, 24, 6);
-                glDrawArrays(GL_TRIANGLES, 30, 6);*/
-
-                //glDrawArrays(GL_TRIANGLES, 36, 6);
-                //glDrawArrays(GL_TRIANGLES, 48, 6);
-                //glDrawArrays(GL_TRIANGLES, 50, 6);
-            }
-            offset += 6;
+            //glDrawArrays(GL_TRIANGLES, 36, 6);
+            //glDrawArrays(GL_TRIANGLES, 48, 6);
+            //glDrawArrays(GL_TRIANGLES, 50, 6);
         }
+        offset += 6;
     }
 }
-
-/*void Block::draw(Texture& texture)
-{
-    texture.bind();
-}*/
-//void Block::draw(Texture& back, Texture& front, Texture& left, Texture& right, Texture& bottom, Texture& top);
