@@ -15,7 +15,7 @@
 #include "VBO.h"
 #include "VAO.h"
 #include "texture.h"
-
+#include "block.h"
 
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
@@ -40,50 +40,6 @@ void processInput(GLFWwindow* window);
 unsigned int curr_width = 800;
 unsigned int curr_height = 600;
 
-float vertices[] = {
-    -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
-     0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
-     0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-     0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-    -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-    -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
-
-    -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-     0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-     0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-     0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-    -0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
-    -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-
-    -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-    -0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-    -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-    -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-    -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-    -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-
-     0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-     0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-     0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-     0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-     0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-     0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-
-    -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-     0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
-     0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-     0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-    -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-    -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-
-    -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-     0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-     0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-     0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-    -0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
-    -0.5f,  0.5f, -0.5f,  0.0f, 1.0f
-};
-
 int main()
 {
     GLFW glfw;
@@ -97,17 +53,11 @@ int main()
         glfwSetInputMode(window.m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     }
     Shader shader("src/shaders/shader.vs", "src/shaders/shader.fs");
-    VBO vbo; VAO vao;
-    {
-        vbo.push_data(sizeof(vertices), vertices, GL_STATIC_DRAW);
-        vao.push_data(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
-        vao.push_data(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(sizeof(float) * 3));
-    }
 
     Texture texture("src/textures/test2.jpg", GL_RGB, GL_RGB);
     Texture texture2("src/textures/test.jpg", GL_RGB, GL_RGB);
 
-    
+    Block block;
 
     shader.use();
     shader.setInt("texture1", 0);
@@ -124,7 +74,7 @@ int main()
         processInput(window.m_window);
         
         window.clear();
-        vao.bind();
+        //vao.bind();
 
         glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)curr_width / (float)curr_height, 0.1f, 100.0f);
         glm::mat4 view = camera.GetViewMatrix();
@@ -137,30 +87,12 @@ int main()
         texture.bind(0);
         texture2.bind(1);
 
-        for (float Y = 0; Y < 16.f; Y++)
-        {
-            for (float Z = 0; Z < 16.0f; ++Z)
-                for (float X = 0; X < 16.f; ++X)
-                {
-                    
-                    shader.use();
-                    shader.setInt("texture1", 0);
+        glm::mat4 model = glm::mat4(1.0f);
+        model = glm::translate(model, glm::vec3(0, 0, 0));
+        shader.setMat4("model", model);
 
-                    glm::mat4 model = glm::mat4(1.0f);
-                    model = glm::scale(model, glm::vec3(.5f, .5f, .5f));
-                    model = glm::translate(model, glm::vec3(X, -1.0f + Y, -3.0f + Z));
-                    shader.setMat4("model", model);
-                    glDrawArrays(GL_TRIANGLES, 0, 36);
-
-                    shader.use();
-                    shader.setInt("texture1", 1);
-                    model = glm::mat4(1.0f);
-                    model = glm::scale(model, glm::vec3(.5f, .5f, .5f));
-                    model = glm::translate(model, glm::vec3(X + 16, -1.0f + Y, -3.0f + Z));
-                    shader.setMat4("model", model);
-                    glDrawArrays(GL_TRIANGLES, 0, 36);
-                }
-        }
+        block.draw();
+        
         window.swapBuff();
 
         window.eventUpdate();

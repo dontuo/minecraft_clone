@@ -147,6 +147,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\block.cpp" />
     <ClCompile Include="src\glfw.cpp" />
     <ClCompile Include="src\glad.c" />
     <ClCompile Include="src\main.cpp" />
@@ -157,6 +158,7 @@
     <ClCompile Include="src\texture.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\block.h" />
     <ClInclude Include="src\glfw.h" />
     <ClInclude Include="src\main.h" />
     <ClInclude Include="src\stb_image.h" />

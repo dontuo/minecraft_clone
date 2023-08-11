@@ -21,7 +21,7 @@ void Block::push_Data()
     
     uv.push_data(sizeof(uvs), uvs, GL_STATIC_DRAW);
     uv.bind();
-    m_vao.push_data(1, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
+    uv.push_data(1, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
     
     //m_data_vertices.push_data(sizeof(uvs), uvs, GL_STATIC_DRAW);
     //m_ebo.push_data(sizeof(cube_elements), cube_elements, GL_UNSIGNED_SHORT);
