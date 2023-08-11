@@ -1,8 +1,10 @@
 #include "VBO.h"
-
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+#include <iostream>
 
 VBO::VBO()
-{
+{ 
 	glGenBuffers(1, &mVBO);
 }
 

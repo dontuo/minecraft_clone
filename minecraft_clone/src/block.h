@@ -10,80 +10,6 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-/*static GLfloat cube_vertices[] = {
-    // front
-    -1.0, -1.0,  1.0,
-     1.0, -1.0,  1.0,
-     1.0,  1.0,  1.0,
-    -1.0,  1.0,  1.0,
-    // back
-    -1.0, -1.0, -1.0,
-     1.0, -1.0, -1.0,
-     1.0,  1.0, -1.0,
-    -1.0,  1.0, -1.0
-};*/
-/*
-static GLushort cube_elements[] = {
-    // front
-    0, 1, 2,
-    2, 3, 0,
-    // right
-    1, 5, 6,
-    6, 2, 1,
-    // back
-    7, 6, 5,
-    5, 4, 7,
-    // left
-    4, 0, 3,
-    3, 7, 4,
-    // bottom
-    4, 5, 1,
-    1, 0, 4,
-    // top
-    3, 2, 6,
-    6, 7, 3,
-};*/
-
-/*
-GLushort front_elements[] =
-{
-    // front
-    0, 1, 2,
-    2, 3, 0,
-};
-
-GLushort right_elements[] =
-{
-    // right
-    1, 5, 6,
-    6, 2, 1,
-};
-
-GLushort back_elements[] =
-{
-    7, 6, 5,
-    5, 4, 7,
-};
-
-
-GLushort left_elements[] =
-{
-    4, 0, 3,
-    3, 7, 4,
-};
-
-GLushort bottom_elements[] =
-{
-    4, 5, 1,
-    1, 0, 4,
-};
-
-GLushort top_elements[] =
-{
-    3, 2, 6,
-    6, 7, 3
-};
-*/
 static float uvs[] =
 {
     0.0f, 0.0f,
@@ -174,27 +100,25 @@ static float cube_vertices[] = {
         -0.5f,  0.5f, -0.5f,  0.0f, 1.0f
 };
 
-
-
 enum Id : int
 {
 	AIR = 0,
 	GRASS,
 	STONE,
 };
+// TODO: textures for block and memory optimisation
 
 class Block
 {
 public:
-    int m_x = 0;
-    int m_y = 0;
-    int m_z = 0;
+    glm::vec3 m_coordinates { 0.f };
         
     //float* m_cube_data = cube_vertices;
     VBO uv;
     VBO m_data_vertices;
     VAO m_vao;
-    EBO m_ebo;
+
+    //Shader& m_ShaderHandle;
 
     // 0: back
     // 1: front
@@ -207,8 +131,10 @@ public:
 
     void push_Data();
     Block();
-
+    //Block(float x, float y, float z, Shader &shader);
     //Texture m_front_Texture;
 
 	void draw();
+    void draw(Texture &texture);
+    void draw(Texture &back, Texture &front, Texture &left, Texture &right, Texture &bottom, Texture &top);
 };
